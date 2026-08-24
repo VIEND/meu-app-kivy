@@ -7,41 +7,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout do código
       uses: actions/checkout@v4
 
-    - name: Configurar Java 17
-      uses: actions/setup-java@v5
+    - name: Compilar APK com Buildozer Action
+      uses: Artemis-Skade/buildozer-action@v1.2.0
       with:
-        distribution: 'temurin'
-        java-version: '17'
-
-    - name: Configurar Python 3.11
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-
-    - name: Instalar dependências do sistema
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          build-essential libsqlite3-dev sqlite3 bzip2 libbz2-dev libssl-dev openssl \
-          libffi-dev zlib1g-dev libreadline-dev libncurses5-dev libncursesw5-dev \
-          xz-utils tk-dev libxml2-dev libxmlsec1-dev liblzma-dev git zip unzip ffmpeg \
-          libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev \
-          autoconf libtool pkg-config zlib1g-dev
-
-    - name: Instalar Buildozer e Cython
-      run: |
-        python -m pip install --upgrade pip setuptools
-        pip install "cython<3.0.0" "buildozer==1.5.0"
-
-    - name: Executar o Buildozer
-      run: |
-        yes | buildozer -v android debug
+        command: buildozer -v android debug
+        buildozer_version: master
 
     - name: Disponibilizar o APK para Download
       uses: actions/upload-artifact@v4
