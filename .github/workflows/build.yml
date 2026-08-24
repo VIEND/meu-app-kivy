@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout do código
+    - name: Checkout do codigo
       uses: actions/checkout@v4
 
-    - name: Configurar JDK 17
+    - name: Configurar Java 17
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
@@ -24,7 +24,7 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Instalar dependências do sistema
+    - name: Instalar dependencias do sistema
       run: |
         sudo apt-get update
         sudo apt-get install -y \
